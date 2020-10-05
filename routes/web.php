@@ -14,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    try {
+        $redis = \Illuminate\Support\Facades\Redis::connect(config('database.redis.default.host'), config('database.redis.default.port'));
+
+        return 'Redis is available';
+    } catch (\Exception $e) {
+        return 'Redis is not available';
+    }
 });
